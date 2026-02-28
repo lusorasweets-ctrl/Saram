@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Sara 🌹</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@600;700&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --rose: #e8527a;
+    --deep: #c0254e;
+    --gold: #f7c948;
+    --blush: #fce4ec;
+    --plum: #6d1e40;
+    --cream: #fff5f7;
+  }
+
+  body {
+    font-family: 'Lora', serif;
+    background: linear-gradient(135deg, #0d0000 0%, #2a0010 40%, #1a000a 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* ===== FALLING ROSES ===== */
+  #rose-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===== TOUCH SPARKS ===== */
+  .spark {
+    position: fixed;
+    pointer-events: none;
+    z-index: 999;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    font-weight: 700;
+    animation: sparkFly 1.2s ease-out forwards;
+  }
+  @keyframes sparkFly {
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
+    60% { opacity: 1; transform: translate(-50%, -120%) scale(1.3); }
+    100% { opacity: 0; transform: translate(-50%, -200%) scale(0.8); }
+  }
+
+  /* ===== MAIN WRAPPER ===== */
+  .wrapper {
+    position: relative;
+    z-index: 10;
+    max-width: 430px;
+    margin: 0 auto;
+    padding: 0 0 60px 0;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    text-align: center;
+    padding: 60px 20px 40px;
+  }
+  .hero-emoji {
+    font-size: 4rem;
+    display: block;
+    animation: floatHeart 3s ease-in-out infinite;
+  }
+  @keyframes floatHeart {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-12px) scale(1.08); }
+  }
+  .hero-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 5.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #f7c948, #e8527a, #ff9dbf, #f7c948);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 4s ease infinite;
+    line-height: 1;
+    margin-top: 10px;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .hero-tagline {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    color: #ffb3c8;
+    font-size: 1rem;
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  /* ===== BOOK ===== */
+  .book {
+    margin: 10px 16px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255, 160, 180, 0.2);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(200, 30, 80, 0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+
+  /* Book spine accent */
+  .book::before {
+    content: '';
+    display: block;
+    height: 4px;
+    background: linear-gradient(90deg, #f7c948, #e8527a, #c0254e, #f7c948);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+  }
+
+  /* ===== PAGES ===== */
+  .pages {
+    display: flex;
+    overflow-x: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* hidden scroll bar */
+  .pages::-webkit-scrollbar { display: none; }
+
+  .page {
+    min-width: 100%;
+    scroll-snap-align: start;
+    padding: 30px 24px 36px;
+    position: relative;
+  }
+
+  .page-number {
+    position: absolute;
+    bottom: 14px;
+    right: 20px;
+    font-size: 0.7rem;
+    color: rgba(255,160,180,0.5);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Dancing Script', cursive;
+  }
+
+  .page-icon {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    display: block;
+    text-align: center;
+  }
+
+  .page-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.7rem;
+    color: #f7c948;
+    text-align: center;
+    margin-bottom: 18px;
+  }
+
+  .poem {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: #ffd6e4;
+    text-align: center;
+    white-space: pre-line;
+  }
+
+  .poem b {
+    color: #f7c948;
+    font-style: normal;
+  }
+
+  .about-text {
+    font-family: 'Lora', serif;
+    font-size: 1rem;
+    line-height: 1.85;
+    color: #ffccd5;
+    text-align: center;
+    white-space: pre-line;
+  }
+
+  .about-text strong {
+    color: #ffd166;
+    font-style: italic;
+  }
+
+  /* ===== NAVIGATION DOTS ===== */
+  .dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 18px 0 4px;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,160,180,0.3);
+    border: 1px solid rgba(255,160,180,0.5);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .dot.active {
+    background: #e8527a;
+    width: 22px;
+    border-radius: 4px;
+    box-shadow: 0 0 8px #e8527a;
+  }
+
+  /* ===== NAV ARROWS ===== */
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px 0;
+  }
+  .nav-btn {
+    background: rgba(232, 82, 122, 0.2);
+    border: 1px solid rgba(232, 82, 122, 0.4);
+    color: #ffb3c8;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-btn:active { transform: scale(0.9); background: rgba(232,82,122,0.5); }
+
+  .page-label {
+    font-family: 'Dancing Script', cursive;
+    color: rgba(255,180,200,0.7);
+    font-size: 0.95rem;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    text-align: center;
+    padding: 30px 20px 20px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    color: rgba(255,160,180,0.6);
+  }
+  .footer span {
+    animation: pulse 2s ease-in-out infinite;
+    display: inline-block;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); color: rgba(255,100,150,0.7); }
+    50% { transform: scale(1.2); color: #e8527a; }
+  }
+
+  /* ===== SPARKLE LETTERS ===== */
+  .sparkle-letters {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin: 10px 0 20px;
+  }
+  .sl {
+    display: inline-block;
+    animation: letterBounce 2s ease-in-out infinite;
+    cursor: pointer;
+  }
+  .sl:nth-child(1) { animation-delay: 0s; color: #f7c948; }
+  .sl:nth-child(2) { animation-delay: 0.15s; color: #e8527a; }
+  .sl:nth-child(3) { animation-delay: 0.3s; color: #ff9dbf; }
+  .sl:nth-child(4) { animation-delay: 0.45s; color: #c0254e; }
+  @keyframes letterBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px) rotate(-5deg); }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="rose-canvas"></canvas>
+
+<div class="wrapper">
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-emoji">🌹</span>
+    <div class="hero-name">Sara</div>
+    <div class="sparkle-letters">
+      <span class="sl">S</span><span class="sl">A</span><span class="sl">R</span><span class="sl">A</span>
+    </div>
+    <div class="hero-tagline">Qəlbimin ən gözəl şeiri</div>
+  </div>
+
+  <!-- BOOK -->
+  <div class="book">
+    <div class="pages" id="pages">
+
+      <!-- PAGE 1: ABOUT -->
+      <div class="page">
+        <span class="page-icon">💫</span>
+        <div class="page-title">Sən kimsən, Sara?</div>
+        <div class="about-text">Sən <strong>gözəlliyin özüsən</strong>,
+günəşin işığını udmuş bir qız.
+
+Baxışların <strong>dərindir</strong> —
+dəniz kimi, səma kimi.
+
+Gülüşün <strong>bütün qaranlığı</strong>
+bir anda aydınladır.
+
+Sən sadəcə bir insan deyilsən,
+sən bir <strong>möcüzəsən</strong>. 🌸</div>
+        <div class="page-number">01 / 06</div>
+      </div>
+
+      <!-- PAGE 2: POEM 1 -->
+      <div class="page">
+        <span class="page-icon">🌹</span>
+        <div class="page-title">İlk Şeir</div>
+        <div class="poem">Adın Sara — şirin bir kəlam,
+<b>S</b>ükut içindəki ən gözəl arzum.
+<b>A</b>nı seni görəndə durur zaman,
+<b>R</b>uhum sevinir, söner hər ağrım.
+<b>A</b>şiqəm sənə — budur etirafım.</div>
+        <div class="page-number">02 / 06</div>
+      </div>
+
+      <!-- PAGE 3: POEM 2 -->
+      <div class="page">
+        <span class="page-icon">🌸</span>
+        <div class="page-title">Gözlərin</div>
+        <div class="poem">Gözlərindən baxanda dünyaya,
+hər şey daha rəngli görünür.
+
+Sanki Tanrı o gözləri yaradanda
+bütün sevgini içinə tökdü.
+
+<b>Bir baxışın</b> bəs elədi mənə —
+ömrümü sənə bağladım bu gün.</div>
+        <div class="page-number">03 / 06</div>
+      </div>
+
+      <!-- PAGE 4: POEM 3 -->
+      <div class="page">
+        <span class="page-icon">✨</span>
+        <div class="page-title">Sənə Söz</div>
+        <div class="poem">Hər gün sənin adını deyirəm
+ürəyimdə sakit bir dua kimi.
+
+<b>Sara</b> — üç hərf, bir kainat,
+bir ömür yetmər sənə baxmağa.
+
+Qalan nə varsa bu dünyada —
+sənin yanında heçdir, <b>heç</b>.</div>
+        <div class="page-number">04 / 06</div>
+      </div>
+
+      <!-- PAGE 5: POEM 4 -->
+      <div class="page">
+        <span class="page-icon">💖</span>
+        <div class="page-title">Gecə Şeiri</div>
+        <div class="poem">Gecə yatanda,
+ulduza baxanda —
+<b>sənin adını</b> düşünürəm.
+
+Ay işığı pəncərəmdən girər,
+mən isə yenə səni xatırlayaram.
+
+Sən mənim <b>gecəmisən</b>,
+sən mənim <b>sabahımsan</b>.</div>
+        <div class="page-number">05 / 06</div>
+      </div>
+
+      <!-- PAGE 6: FINAL -->
+      <div class="page">
+        <span class="page-icon">🌹</span>
+        <div class="page-title">Sənə Məktub</div>
+        <div class="about-text">Əziz Sara,
+
+Bu kiçik kitabı <strong>sənin üçün</strong> yazdım —
+çünkü sözlər çətin tapılır sənin kimi birini ifadə etmək üçün.
+
+Amma bil ki, hər <strong>gülüşündə</strong>,
+hər <strong>baxışında</strong>,
+hər nəfəsindən sonra —
+
+<strong>Sənə aşiqəm.</strong>
+
+🌹 Həmişə sənin. 🌹</div>
+        <div class="page-number">06 / 06</div>
+      </div>
+
+    </div>
+
+    <!-- DOTS -->
+    <div class="dots" id="dots"></div>
+
+    <!-- NAV -->
+    <div class="nav-row">
+      <button class="nav-btn" id="prevBtn">‹</button>
+      <span class="page-label" id="pageLabel">Səhifə 1</span>
+      <button class="nav-btn" id="nextBtn">›</button>
+    </div>
+    <br>
+  </div>
+
+  <div class="footer">
+    <span>🌹</span> Həmişə Sara üçün <span>❤️</span>
+  </div>
+</div>
+
+<script>
+// ===== FALLING ROSES CANVAS =====
+const canvas = document.getElementById('rose-canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+const roses = [];
+for (let i = 0; i < 22; i++) {
+  roses.push({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight - window.innerHeight,
+    size: 18 + Math.random() * 22,
+    speed: 0.8 + Math.random() * 1.5,
+    swing: Math.random() * 2 - 1,
+    angle: Math.random() * Math.PI * 2,
+    angleSpeed: (Math.random() - 0.5) * 0.04,
+    opacity: 0.5 + Math.random() * 0.5
+  });
+}
+
+function drawRose(x, y, size, angle, opacity) {
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  ctx.font = `${size}px serif`;
+  ctx.translate(x, y);
+  ctx.rotate(angle);
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('🌹', 0, 0);
+  ctx.restore();
+}
+
+let frame = 0;
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  frame++;
+  roses.forEach(r => {
+    r.y += r.speed;
+    r.x += Math.sin(frame * 0.02 + r.swing) * 0.6;
+    r.angle += r.angleSpeed;
+    if (r.y > canvas.height + 50) {
+      r.y = -50;
+      r.x = Math.random() * canvas.width;
+    }
+    drawRose(r.x, r.y, r.size, r.angle, r.opacity);
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+// ===== BOOK PAGINATION =====
+const pagesEl = document.getElementById('pages');
+const dotsEl = document.getElementById('dots');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const pageLabel = document.getElementById('pageLabel');
+const totalPages = pagesEl.children.length;
+let current = 0;
+
+// Create dots
+for (let i = 0; i < totalPages; i++) {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+}
+
+function updateDots() {
+  [...dotsEl.children].forEach((d, i) => {
+    d.className = 'dot' + (i === current ? ' active' : '');
+  });
+  pageLabel.textContent = `Səhifə ${current + 1}`;
+}
+
+function goTo(n) {
+  current = Math.max(0, Math.min(totalPages - 1, n));
+  pagesEl.scrollTo({ left: current * pagesEl.clientWidth, behavior: 'smooth' });
+  updateDots();
+}
+
+prevBtn.onclick = () => goTo(current - 1);
+nextBtn.onclick = () => goTo(current + 1);
+
+// Swipe detection
+let startX = 0;
+pagesEl.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+pagesEl.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - startX;
+  if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+});
+
+// ===== TOUCH SPARKS =====
+const sparkLetters = ['S','A','R','A','💖','🌹','✨','🌸','💫','❤️'];
+const sparkColors = ['#f7c948','#e8527a','#ff9dbf','#c0254e','#ffd6e4','#ffaacc','#ff6b9d','#ffdd00','#ff4488','#ff8c69'];
+
+function createSpark(x, y) {
+  const span = document.createElement('div');
+  span.className = 'spark';
+  const letter = sparkLetters[Math.floor(Math.random() * sparkLetters.length)];
+  const color = sparkColors[Math.floor(Math.random() * sparkColors.length)];
+  span.textContent = letter;
+  span.style.color = color;
+  span.style.textShadow = `0 0 10px ${color}`;
+  span.style.left = x + 'px';
+  span.style.top = y + 'px';
+  // slight random offset
+  span.style.transform = `translate(-50%, -50%) rotate(${(Math.random()-0.5)*30}deg)`;
+  document.body.appendChild(span);
+  setTimeout(() => span.remove(), 1300);
+}
+
+document.body.addEventListener('touchstart', e => {
+  for (let t of e.changedTouches) {
+    for (let i = 0; i < 3; i++) {
+      setTimeout(() => createSpark(
+        t.clientX + (Math.random()-0.5)*40,
+        t.clientY + (Math.random()-0.5)*40
+      ), i * 80);
+    }
+  }
+}, { passive: true });
+
+document.body.addEventListener('click', e => {
+  for (let i = 0; i < 3; i++) {
+    setTimeout(() => createSpark(
+      e.clientX + (Math.random()-0.5)*40,
+      e.clientY + (Math.random()-0.5)*40
+    ), i * 80);
+  }
+});
+
+updateDots();
+</script>
+</body>
+</html>
